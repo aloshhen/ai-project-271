@@ -58,6 +58,15 @@ const galleryItems = [
     title: 'Момент 3',
     category: 'nature',
     aspectRatio: 'aspect-[4/3]'
+  },
+  {
+    id: 5,
+    type: 'gif',
+    url: 'https://oejgkvftpbinliuopipr.supabase.co/storage/v1/object/public/assets/user_347995964/edit-animation-1770406522-5232.mp4?',
+    thumbnail: 'https://oejgkvftpbinliuopipr.supabase.co/storage/v1/object/public/assets/user_347995964/edit-animation-1770406522-5232.mp4?',
+    title: 'Анимация',
+    category: 'portfolio',
+    aspectRatio: 'aspect-video'
   }
 ]
 
@@ -132,6 +141,12 @@ const Lightbox = ({ item, onClose, onNext, onPrev }) => {
             autoPlay
             className="max-w-full max-h-[85vh] rounded-lg shadow-2xl"
           />
+        ) : item.type === 'gif' ? (
+          <img
+            src={item.url}
+            alt={item.title}
+            className="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl"
+          />
         ) : (
           <img
             src={item.url}
@@ -145,7 +160,7 @@ const Lightbox = ({ item, onClose, onNext, onPrev }) => {
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-center">
         <h3 className="text-white text-xl font-semibold">{item.title}</h3>
         <p className="text-gray-400 text-sm mt-1">
-          {item.type === 'video' ? 'Видео' : 'Фотография'}
+          {item.type === 'video' ? 'Видео' : item.type === 'gif' ? 'GIF Анимация' : 'Фотография'}
         </p>
       </div>
 
@@ -187,6 +202,20 @@ const GalleryItem = ({ item, onClick, index }) => {
               </div>
             </div>
           </>
+        ) : item.type === 'gif' ? (
+          <>
+            <img
+              src={item.thumbnail}
+              alt={item.title}
+              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+              loading="lazy"
+            />
+            <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/30 transition-colors">
+              <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
+                <SafeIcon name="sparkles" size={20} className="text-white" />
+              </div>
+            </div>
+          </>
         ) : (
           <img
             src={item.thumbnail}
@@ -202,7 +231,7 @@ const GalleryItem = ({ item, onClick, index }) => {
             <h3 className="text-white font-semibold text-lg">{item.title}</h3>
             <div className="flex items-center gap-2 mt-1">
               <SafeIcon
-                name={item.type === 'video' ? 'video' : 'image'}
+                name={item.type === 'video' ? 'video' : item.type === 'gif' ? 'sparkles' : 'image'}
                 size={14}
                 className="text-gray-300"
               />
@@ -324,7 +353,7 @@ function App() {
             </h1>
 
             <p className="text-lg md:text-xl text-gray-400 mb-10 max-w-2xl mx-auto leading-relaxed">
-              Погрузитесь в мир визуальных историй. Фотографии и видео, которые рассказывают больше, чем слова.
+              Погрузитесь в мир визуальных историй. Фотографии, видео и анимации, которые рассказывают больше, чем слова.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -495,8 +524,8 @@ function App() {
             >
               <div className="relative rounded-2xl overflow-hidden">
                 <img
-                  src="https://oejgkvftpbinliuopipr.supabase.co/storage/v1/object/public/assets/user_347995964/user-photo-1.jpg?"
-                  alt="About"
+                  src="https://oejgkvftpbinliuopipr.supabase.co/storage/v1/object/public/assets/user_347995964/edit-animation-1770406522-5232.mp4?"
+                  alt="GIF Animation"
                   className="w-full h-auto rounded-2xl"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/50 to-transparent" />
@@ -508,8 +537,8 @@ function App() {
                     <SafeIcon name="check-circle" size={24} className="text-green-400" />
                   </div>
                   <div>
-                    <div className="text-white font-bold">Готово к просмотру</div>
-                    <div className="text-gray-400 text-sm">Высокое качество</div>
+                    <div className="text-white font-bold">Анимация</div>
+                    <div className="text-gray-400 text-sm">Динамичный контент</div>
                   </div>
                 </div>
               </div>
